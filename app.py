@@ -49,3 +49,16 @@ print("-------------doc search-----------------")
 docs = docsearch.similarity_search(query)
 
 print(docs[0].page_content)
+
+
+Existing_docs = Pinecone.from_existing_index(index_name=index_name, embedding=embeddings)
+
+Exist_retriever = Existing_docs.as_retriever()
+
+Existing_qa = RetrievalQA.from_chain_type(llm=OpenAI(openai_api_key=OPENAI_API_KEY), chain_type="stuff", retriever=Exist_retriever)
+
+print(">>>>>>>>>>>>>> <<<<<<<<<<<<< Existing retriver :::")
+
+print(Existing_qa.run(query))
+
+
